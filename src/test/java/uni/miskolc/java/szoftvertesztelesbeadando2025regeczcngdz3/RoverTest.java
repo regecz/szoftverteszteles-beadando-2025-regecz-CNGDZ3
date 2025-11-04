@@ -96,8 +96,8 @@ class RoverTest {
 
         rover.execute("b");
 
-        assertEquals(5, rover.getPosition().getX());
-        assertEquals(4, rover.getPosition().getY());
+        assertEquals(4, rover.getPosition().getX());
+        assertEquals(5, rover.getPosition().getY());
         assertEquals(Direction.E, rover.getDirection());
     }
 }
