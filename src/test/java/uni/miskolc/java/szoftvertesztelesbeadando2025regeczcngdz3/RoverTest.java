@@ -178,5 +178,17 @@ class RoverTest {
         assertEquals(Direction.S, rover.getDirection());
     }
 
+    @Test
+    void executesForwardAtEastWarpToSouth() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(5, 0), Direction.E);
+
+        rover.execute("f");
+
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(Direction.E, rover.getDirection());
+    }
+
 
 }
