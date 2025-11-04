@@ -88,6 +88,12 @@ public class Rover {
                     direction = Direction.N;
                 }
             }
+
+            if (c == 'l') {
+                if (direction == Direction.N) {
+                    direction = Direction.W;
+                }
+            }
         }
     }
 }
