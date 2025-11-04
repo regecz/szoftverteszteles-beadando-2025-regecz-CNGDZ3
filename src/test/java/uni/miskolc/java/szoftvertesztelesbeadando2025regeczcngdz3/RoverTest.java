@@ -11,9 +11,8 @@ class RoverTest {
         Planet planet = new Planet(10, 10);
         Rover rover = new Rover(planet, new Position(3, 4), Direction.N);
 
-        assertEquals(3, rover.getPosition().x());
-        assertEquals(4, rover.getPosition().y());
+        assertEquals(3, rover.getPosition().getX());
+        assertEquals(4, rover.getPosition().getY());
         assertEquals(Direction.N, rover.getDirection());
     }
 }
-
