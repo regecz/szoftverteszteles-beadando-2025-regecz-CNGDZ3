@@ -48,6 +48,8 @@ public class Rover {
             if (c == 'r') {
                 if (direction == Direction.N) {
                     direction = Direction.E;
+                } else if (direction == Direction.E) {
+                    direction = Direction.S;
                 }
             }
         }
