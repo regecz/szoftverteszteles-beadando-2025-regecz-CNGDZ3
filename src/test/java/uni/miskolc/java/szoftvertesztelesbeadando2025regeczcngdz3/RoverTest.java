@@ -1,7 +1,6 @@
 package uni.miskolc.java.szoftvertesztelesbeadando2025regeczcngdz3;
 
 import org.junit.jupiter.api.Test;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -301,9 +300,8 @@ class RoverTest {
 
     @Test
     void stopsAtObstacleWhenMovingForward() {
-        boolean[][] obstacles = new boolean[6][6];
-        obstacles[0][1] = true;
-        Planet planet = new Planet(5, 5, obstacles);
+        Planet planet = new Planet(5, 5);
+        planet.getObstacles()[0][1] = true;
         Rover rover = new Rover(planet, new Position(0, 0), Direction.N);
 
         rover.execute("f");
