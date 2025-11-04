@@ -102,6 +102,10 @@ public class Rover {
                     direction = Direction.E;
                     continue;
                 }
+                if (direction == Direction.E) {
+                    direction = Direction.N;
+                    continue;
+                }
             }
         }
     }
