@@ -16,122 +16,52 @@ public class Rover {
 
     public void execute(String commands) {
         for (char c : commands.toCharArray()) {
-            // Move forward
-            if (c == 'f') {
-                if (direction == Direction.N) {
-                    if (position.getY() >= planet.getHeight()) {
-                        position = new Position(position.getX(), 0);
-                        if (obstacleDetected(position)) {
-                            Position blocked = position;
-                            position = new Position(position.getX(), planet.getHeight());
-                            makeReportForObstacle(blocked);
-                            break;
-                        }
-                        continue;
-                    }
-                    position = new Position(position.getX(), position.getY() + 1);
-                    if (obstacleDetected(position)) {
-                        Position blocked = position;
-                        position = new Position(position.getX(), position.getY() - 1);
-                        makeReportForObstacle(blocked);
-                    }
-                } else if (direction == Direction.S) {
-                    if (position.getY() <= 0) {
-                        position = new Position(position.getX(), planet.getHeight());
-                        if (obstacleDetected(position)) {
-                            Position blocked = position;
-                            position = new Position(position.getX(), 0);
-                            makeReportForObstacle(blocked);
-                            break;
-                        }
-                        continue;
-                    }
-                    position = new Position(position.getX(), position.getY() - 1);
-                    if (obstacleDetected(position)) {
-                        Position blocked = position;
-                        position = new Position(position.getX(), position.getY() + 1);
-                        makeReportForObstacle(blocked);
-                    }
-                } else if (direction == Direction.E) {
-                    if (position.getX() >= planet.getWidth()) {
-                        position = new Position(0, position.getY());
-                        if (obstacleDetected(position)) {
-                            Position blocked = position;
-                            position = new Position(planet.getWidth(), position.getY());
-                            makeReportForObstacle(blocked);
-                            break;
-                        }
-                        continue;
-                    }
-                    position = new Position(position.getX() + 1, position.getY());
-                    if (obstacleDetected(position)) {
-                        Position blocked = position;
-                        position = new Position(position.getX() - 1, position.getY());
-                        makeReportForObstacle(blocked);
-                    }
-                } else if (direction == Direction.W) {
-                    if (position.getX() <= 0) {
-                        position = new Position(planet.getWidth(), position.getY());
-                        if (obstacleDetected(position)) {
-                            Position blocked = position;
-                            position = new Position(0, position.getY());
-                            makeReportForObstacle(blocked);
-                            break;
-                        }
-                        continue;
-                    }
-                    position = new Position(position.getX() - 1, position.getY());
-                    if (obstacleDetected(position)) {
-                        Position blocked = position;
-                        position = new Position(position.getX() + 1, position.getY());
-                        makeReportForObstacle(blocked);
-                    }
+            if (c == 'f' || c == 'b') {
+                // compute next cell with wrapping
+                Position next = wrappedNext(c);
+                // skip move if obstacle
+                if (obstacleDetected(next)) {
+                    makeReportForObstacle(next);
+                    continue;
                 }
+                // apply move
+                position = next;
+                continue;
             }
 
-            // Move backward
-            if (c == 'b') {
-                if (direction == Direction.N) {
-                    Position next = (position.getY() <= 0)
-                            ? new Position(position.getX(), planet.getHeight())
-                            : new Position(position.getX(), position.getY() - 1);
-                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
-                    position = next;
-                } else if (direction == Direction.S) {
-                    Position next = (position.getY() >= planet.getHeight())
-                            ? new Position(position.getX(), 0)
-                            : new Position(position.getX(), position.getY() + 1);
-                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
-                    position = next;
-                } else if (direction == Direction.E) {
-                    Position next = (position.getX() <= 0)
-                            ? new Position(planet.getWidth(), position.getY())
-                            : new Position(position.getX() - 1, position.getY());
-                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
-                    position = next;
-                } else if (direction == Direction.W) {
-                    Position next = (position.getX() >= planet.getWidth())
-                            ? new Position(0, position.getY())
-                            : new Position(position.getX() + 1, position.getY());
-                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
-                    position = next;
-                }
-            }
+            if (c == 'r') { turnRight(); continue; }
+            if (c == 'l') { turnLeft(); continue; }
+            // ignore unknown commands
+        }
+    }
 
-            // Turn right
-            if (c == 'r') {
-                if (direction == Direction.N) direction = Direction.E;
-                else if (direction == Direction.E) direction = Direction.S;
-                else if (direction == Direction.S) direction = Direction.W;
-                else if (direction == Direction.W) direction = Direction.N;
-            }
-            // Turn left
-            if (c == 'l') {
-                if (direction == Direction.N) { direction = Direction.W; continue; }
-                if (direction == Direction.W) { direction = Direction.S; continue; }
-                if (direction == Direction.S) { direction = Direction.E; continue; }
-                if (direction == Direction.E) { direction = Direction.N; continue; }
-            }
+    private Position wrappedNext(char move) {
+        int dx = 0, dy = 0;
+        switch (direction) {
+            case N -> { dy = (move == 'f') ? 1 : -1; }
+            case S -> { dy = (move == 'f') ? -1 : 1; }
+            case E -> { dx = (move == 'f') ? 1 : -1; }
+            case W -> { dx = (move == 'f') ? -1 : 1; }
+        }
+        Position tentative = new Position(position.getX() + dx, position.getY() + dy);
+        return wrap(tentative);
+    }
+
+    private void turnRight() {
+        switch (direction) {
+            case N -> direction = Direction.E;
+            case E -> direction = Direction.S;
+            case S -> direction = Direction.W;
+            case W -> direction = Direction.N;
+        }
+    }
+
+    private void turnLeft() {
+        switch (direction) {
+            case N -> direction = Direction.W;
+            case W -> direction = Direction.S;
+            case S -> direction = Direction.E;
+            case E -> direction = Direction.N;
         }
     }
 
