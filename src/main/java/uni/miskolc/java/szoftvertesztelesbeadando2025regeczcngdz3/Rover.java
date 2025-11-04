@@ -36,6 +36,8 @@ public class Rover {
             if (c == 'b') {
                 if (direction == Direction.N) {
                     position = new Position(position.getX(), position.getY() - 1);
+                } else if (direction == Direction.S) {
+                    position = new Position(position.getX(), position.getY() + 1);
                 }
             }
         }
