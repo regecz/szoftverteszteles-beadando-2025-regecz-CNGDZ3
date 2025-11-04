@@ -28,6 +28,8 @@ public class Rover {
                     position = new Position(position.getX(), position.getY() - 1);
                 } else if (direction == Direction.E) {
                     position = new Position(position.getX() + 1, position.getY());
+                } else if (direction == Direction.W) {
+                position = new Position(position.getX() - 1, position.getY());
                 }
             }
         }
