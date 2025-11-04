@@ -29,7 +29,13 @@ public class Rover {
                 } else if (direction == Direction.E) {
                     position = new Position(position.getX() + 1, position.getY());
                 } else if (direction == Direction.W) {
-                position = new Position(position.getX() - 1, position.getY());
+                    position = new Position(position.getX() - 1, position.getY());
+                }
+            }
+
+            if (c == 'b') {
+                if (direction == Direction.N) {
+                    position = new Position(position.getX(), position.getY() - 1);
                 }
             }
         }
