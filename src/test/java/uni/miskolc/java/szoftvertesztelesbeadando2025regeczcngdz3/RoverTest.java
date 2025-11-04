@@ -15,6 +15,19 @@ class RoverTest {
         assertEquals(4, rover.getPosition().getY());
         assertEquals(Direction.N, rover.getDirection());
     }
+    @Test
+    void executesForwardFacingNorthMovesUpOne() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(0, 0), Direction.N);
+
+        rover.execute("f");
+
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(1, rover.getPosition().getY());
+        assertEquals(Direction.N, rover.getDirection());
+    }
+
+
 
     @Test
     void executesForwardFacingSouthMovesDownOne() {
