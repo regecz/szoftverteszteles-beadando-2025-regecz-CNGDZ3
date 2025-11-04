@@ -143,4 +143,15 @@ class RoverTest {
 
         assertEquals(Direction.W, rover.getDirection());
     }
+
+    @Test
+    void executesTurningRightFromWestToNorth() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(0, 0), Direction.W);
+
+        rover.execute("r");
+
+        assertEquals(Direction.N, rover.getDirection());
+    }
+
 }
