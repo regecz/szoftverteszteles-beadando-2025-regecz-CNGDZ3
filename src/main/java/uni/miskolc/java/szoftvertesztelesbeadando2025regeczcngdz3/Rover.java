@@ -44,6 +44,12 @@ public class Rover {
                     position = new Position(position.getX() + 1, position.getY());
                 }
             }
+
+            if (c == 'r') {
+                if (direction == Direction.N) {
+                    direction = Direction.E;
+                }
+            }
         }
     }
 }
