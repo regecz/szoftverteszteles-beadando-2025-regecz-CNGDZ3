@@ -18,5 +18,16 @@ public class Rover {
     public Direction getDirection() {
         return direction;
     }
-}
 
+    public void execute(String commands) {
+        for (char c : commands.toCharArray()) {
+            if (c == 'f') {
+                if (direction == Direction.N) {
+                    position = new Position(position.getX(), position.getY() + 1);
+                } else if (direction == Direction.S) {
+                    position = new Position(position.getX(), position.getY() - 1);
+                }
+            }
+        }
+    }
+}
