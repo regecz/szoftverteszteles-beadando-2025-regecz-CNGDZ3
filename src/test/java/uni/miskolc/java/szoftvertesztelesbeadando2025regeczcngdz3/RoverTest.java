@@ -89,7 +89,7 @@ class RoverTest {
         assertEquals(1, rover.getPosition().getY());
         assertEquals(Direction.S, rover.getDirection());
     }
-
+    //Movement tests for backward
     @Test
     void executesBackwardFacingEastMovesLeftOne() {
         Planet planet = new Planet(5, 5);
@@ -113,7 +113,7 @@ class RoverTest {
         assertEquals(5, rover.getPosition().getY());
         assertEquals(Direction.W, rover.getDirection());
     }
-
+    //Turning tests
     @Test
     void executesTurningRightFromNorthToEast() {
         Planet planet = new Planet(5, 5);
@@ -151,6 +151,19 @@ class RoverTest {
 
         rover.execute("r");
 
+        assertEquals(Direction.N, rover.getDirection());
+    }
+
+    //Planet edge tests
+    @Test
+    void executesForwardAtNorthWarpToBottom() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(2, 5), Direction.N);
+
+        rover.execute("f");
+
+        assertEquals(2, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
         assertEquals(Direction.N, rover.getDirection());
     }
 
