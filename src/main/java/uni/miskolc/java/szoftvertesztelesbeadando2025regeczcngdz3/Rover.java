@@ -98,6 +98,10 @@ public class Rover {
                     direction = Direction.S;
                     continue;
                 }
+                if (direction == Direction.S) {
+                    direction = Direction.E;
+                    continue;
+                }
             }
         }
     }
