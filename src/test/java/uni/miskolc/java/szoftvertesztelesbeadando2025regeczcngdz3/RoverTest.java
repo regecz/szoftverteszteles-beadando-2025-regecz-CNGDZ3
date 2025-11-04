@@ -310,4 +310,17 @@ class RoverTest {
         assertEquals(0, rover.getPosition().getY());
         assertEquals(Direction.N, rover.getDirection());
     }
+
+    @Test
+    void stopsAtObstacleWhenMovingBackward() {
+        Planet planet = new Planet(5, 5);
+        planet.getObstacles()[0][0] = true;
+        Rover rover = new Rover(planet, new Position(0, 1), Direction.N);
+
+        rover.execute("b");
+
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(1, rover.getPosition().getY());
+        assertEquals(Direction.N, rover.getDirection());
+    }
 }
