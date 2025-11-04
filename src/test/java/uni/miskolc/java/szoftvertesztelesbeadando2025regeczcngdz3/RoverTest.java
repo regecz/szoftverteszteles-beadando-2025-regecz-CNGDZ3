@@ -181,13 +181,13 @@ class RoverTest {
     @Test
     void executesTurningLeftFromSouthToEast() {
         Planet planet = new Planet(5, 5);
-        Rover rover = new Rover(planet, new Position(0, 0), Direction.W);
+        Rover rover = new Rover(planet, new Position(0, 0), Direction.S);
 
         rover.execute("l");
 
         assertEquals(0, rover.getPosition().getX());
         assertEquals(0, rover.getPosition().getY());
-        assertEquals(Direction.S, rover.getDirection());
+        assertEquals(Direction.W, rover.getDirection());
     }
 
 
