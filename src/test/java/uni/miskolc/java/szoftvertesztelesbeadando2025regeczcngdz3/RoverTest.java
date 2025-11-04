@@ -1,6 +1,7 @@
 package uni.miskolc.java.szoftvertesztelesbeadando2025regeczcngdz3;
 
 import org.junit.jupiter.api.Test;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -202,8 +203,6 @@ class RoverTest {
         assertEquals(Direction.N, rover.getDirection());
     }
 
-
-
     //Planet edge tests
     @Test
     void executesForwardAtNorthWarpToBottom() {
@@ -300,5 +299,17 @@ class RoverTest {
         assertEquals(Direction.E, rover.getDirection());
     }
 
+    @Test
+    void stopsAtObstacleWhenMovingForward() {
+        boolean[][] obstacles = new boolean[6][6];
+        obstacles[0][1] = true;
+        Planet planet = new Planet(5, 5, obstacles);
+        Rover rover = new Rover(planet, new Position(0, 0), Direction.N);
 
+        rover.execute("f");
+
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(Direction.N, rover.getDirection());
+    }
 }
