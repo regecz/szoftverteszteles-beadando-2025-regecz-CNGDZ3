@@ -23,6 +23,10 @@ public class Rover {
         for (char c : commands.toCharArray()) {
             if (c == 'f') {
                 if (direction == Direction.N) {
+                    if (position.getY() >= planet.getHeight()) {
+                        position = new Position(position.getX(), 0);
+                        continue;
+                    }
                     position = new Position(position.getX(), position.getY() + 1);
                 } else if (direction == Direction.S) {
                     position = new Position(position.getX(), position.getY() - 1);
