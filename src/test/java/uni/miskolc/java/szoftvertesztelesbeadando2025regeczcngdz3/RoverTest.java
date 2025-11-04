@@ -105,12 +105,12 @@ class RoverTest {
     @Test
     void executesBackwardFacingWestMovesRightOne() {
         Planet planet = new Planet(5, 5);
-        Rover rover = new Rover(planet, new Position(5, 5), Direction.W);
+        Rover rover = new Rover(planet, new Position(2, 2), Direction.W);
 
         rover.execute("b");
 
-        assertEquals(6, rover.getPosition().getX());
-        assertEquals(5, rover.getPosition().getY());
+        assertEquals(3, rover.getPosition().getX());
+        assertEquals(2, rover.getPosition().getY());
         assertEquals(Direction.W, rover.getDirection());
     }
     //Turning tests

@@ -65,6 +65,10 @@ public class Rover {
                 }  else if (direction == Direction.E) {
                     position = new Position(position.getX() - 1, position.getY());
                 }   else if (direction == Direction.W) {
+                    if (position.getX() >= planet.getWidth()) {
+                        position = new Position(0, position.getY());
+                        continue;
+                    }
                     position = new Position(position.getX() + 1, position.getY());
                 }
             }
