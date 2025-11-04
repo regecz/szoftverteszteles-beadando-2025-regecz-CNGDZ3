@@ -11,13 +11,8 @@ public class Rover {
         this.direction = facing;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
+    public Position getPosition() { return position; }
+    public Direction getDirection() { return direction; }
 
     public void execute(String commands) {
         for (char c : commands.toCharArray()) {
@@ -26,133 +21,116 @@ public class Rover {
                 if (direction == Direction.N) {
                     if (position.getY() >= planet.getHeight()) {
                         position = new Position(position.getX(), 0);
-                        if (obstacleDetected(position)){
-                            Position positionForReport = position;
+                        if (obstacleDetected(position)) {
+                            Position blocked = position;
                             position = new Position(position.getX(), planet.getHeight());
-                            makeReportForObstacle(positionForReport);
+                            makeReportForObstacle(blocked);
                             break;
                         }
                         continue;
                     }
                     position = new Position(position.getX(), position.getY() + 1);
-                    if (obstacleDetected(position)){
-                        Position positionForReport = position;
+                    if (obstacleDetected(position)) {
+                        Position blocked = position;
                         position = new Position(position.getX(), position.getY() - 1);
-                        makeReportForObstacle(positionForReport);
+                        makeReportForObstacle(blocked);
                     }
                 } else if (direction == Direction.S) {
                     if (position.getY() <= 0) {
                         position = new Position(position.getX(), planet.getHeight());
-                        if (obstacleDetected(position)){
-                            Position positionForReport = position;
+                        if (obstacleDetected(position)) {
+                            Position blocked = position;
                             position = new Position(position.getX(), 0);
-                            makeReportForObstacle(positionForReport);
+                            makeReportForObstacle(blocked);
                             break;
                         }
                         continue;
                     }
                     position = new Position(position.getX(), position.getY() - 1);
-                    if (obstacleDetected(position)){
-                        Position positionForReport = position;
+                    if (obstacleDetected(position)) {
+                        Position blocked = position;
                         position = new Position(position.getX(), position.getY() + 1);
-                        makeReportForObstacle(positionForReport);
+                        makeReportForObstacle(blocked);
                     }
-
                 } else if (direction == Direction.E) {
                     if (position.getX() >= planet.getWidth()) {
                         position = new Position(0, position.getY());
-                        if (obstacleDetected(position)){
-                            Position positionForReport = position;
+                        if (obstacleDetected(position)) {
+                            Position blocked = position;
                             position = new Position(planet.getWidth(), position.getY());
-                            makeReportForObstacle(positionForReport);
+                            makeReportForObstacle(blocked);
                             break;
                         }
                         continue;
                     }
                     position = new Position(position.getX() + 1, position.getY());
-                    if (obstacleDetected(position)){
-                        Position positionForReport = position;
+                    if (obstacleDetected(position)) {
+                        Position blocked = position;
                         position = new Position(position.getX() - 1, position.getY());
-                        makeReportForObstacle(positionForReport);
+                        makeReportForObstacle(blocked);
                     }
                 } else if (direction == Direction.W) {
                     if (position.getX() <= 0) {
                         position = new Position(planet.getWidth(), position.getY());
-                        if (obstacleDetected(position)){
-                            Position positionForReport = position;
+                        if (obstacleDetected(position)) {
+                            Position blocked = position;
                             position = new Position(0, position.getY());
-                            makeReportForObstacle(positionForReport);
+                            makeReportForObstacle(blocked);
                             break;
                         }
                         continue;
                     }
                     position = new Position(position.getX() - 1, position.getY());
-                    if (obstacleDetected(position)){
-                        Position positionForReport = position;
+                    if (obstacleDetected(position)) {
+                        Position blocked = position;
                         position = new Position(position.getX() + 1, position.getY());
-                        makeReportForObstacle(positionForReport);
+                        makeReportForObstacle(blocked);
                     }
                 }
             }
 
-            // Move backward (no obstacle detection)
+            // Move backward
             if (c == 'b') {
                 if (direction == Direction.N) {
-                    if (position.getY() <= 0) {
-                        position = new Position(position.getX(), planet.getHeight());
-                        continue;
-                    }
-                    position = new Position(position.getX(), position.getY() - 1);
+                    Position next = (position.getY() <= 0)
+                            ? new Position(position.getX(), planet.getHeight())
+                            : new Position(position.getX(), position.getY() - 1);
+                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
+                    position = next;
                 } else if (direction == Direction.S) {
-                    if (position.getY() >= planet.getHeight()) {
-                        position = new Position(position.getX(), 0);
-                        continue;
-                    }
-                    position = new Position(position.getX(), position.getY() + 1);
-                }  else if (direction == Direction.E) {
-                    if (position.getX() <= 0) {
-                        position = new Position(planet.getWidth(), position.getY());
-                        continue;
-                    }
-                    position = new Position(position.getX() - 1, position.getY());
-                }   else if (direction == Direction.W) {
-                    if (position.getX() >= planet.getWidth()) {
-                        position = new Position(0, position.getY());
-                        continue;
-                    }
-                    position = new Position(position.getX() + 1, position.getY());
+                    Position next = (position.getY() >= planet.getHeight())
+                            ? new Position(position.getX(), 0)
+                            : new Position(position.getX(), position.getY() + 1);
+                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
+                    position = next;
+                } else if (direction == Direction.E) {
+                    Position next = (position.getX() <= 0)
+                            ? new Position(planet.getWidth(), position.getY())
+                            : new Position(position.getX() - 1, position.getY());
+                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
+                    position = next;
+                } else if (direction == Direction.W) {
+                    Position next = (position.getX() >= planet.getWidth())
+                            ? new Position(0, position.getY())
+                            : new Position(position.getX() + 1, position.getY());
+                    if (obstacleDetected(next)) { makeReportForObstacle(next); continue; }
+                    position = next;
                 }
             }
+
             // Turn right
             if (c == 'r') {
-                if (direction == Direction.N) {
-                    direction = Direction.E;
-                } else if (direction == Direction.E) {
-                    direction = Direction.S;
-                } else if (direction == Direction.S) {
-                    direction = Direction.W;
-                } else if (direction == Direction.W) {
-                    direction = Direction.N;
-                }
+                if (direction == Direction.N) direction = Direction.E;
+                else if (direction == Direction.E) direction = Direction.S;
+                else if (direction == Direction.S) direction = Direction.W;
+                else if (direction == Direction.W) direction = Direction.N;
             }
             // Turn left
             if (c == 'l') {
-                if (direction == Direction.N) {
-                    direction = Direction.W;
-                    continue;
-                }
-                if (direction == Direction.W) {
-                    direction = Direction.S;
-                    continue;
-                }
-                if (direction == Direction.S) {
-                    direction = Direction.E;
-                    continue;
-                }
-                if (direction == Direction.E) {
-                    direction = Direction.N;
-                    continue;
-                }
+                if (direction == Direction.N) { direction = Direction.W; continue; }
+                if (direction == Direction.W) { direction = Direction.S; continue; }
+                if (direction == Direction.S) { direction = Direction.E; continue; }
+                if (direction == Direction.E) { direction = Direction.N; continue; }
             }
         }
     }
