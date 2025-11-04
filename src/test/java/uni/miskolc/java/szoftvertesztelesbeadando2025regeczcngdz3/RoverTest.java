@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoverTest {
-
+    //Movement tests for forward
     @Test
     void initializesWithGivenPositionAndDirection() {
         Planet planet = new Planet(10, 10);
@@ -65,6 +65,7 @@ class RoverTest {
         assertEquals(Direction.W, rover.getDirection());
     }
 
+    //Movement tests for backward
     @Test
     void executesBackwardFacingNorthMovesDownOne() {
         Planet planet = new Planet(5, 5);
@@ -111,5 +112,15 @@ class RoverTest {
         assertEquals(6, rover.getPosition().getX());
         assertEquals(5, rover.getPosition().getY());
         assertEquals(Direction.W, rover.getDirection());
+    }
+
+    @Test
+    void executesTurningRightFromNorthToEast() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(0, 0), Direction.N);
+
+        rover.execute("r");
+
+        assertEquals(Direction.E, rover.getDirection());
     }
 }
