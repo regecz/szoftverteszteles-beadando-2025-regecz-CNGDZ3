@@ -203,16 +203,15 @@ class RoverTest {
     }
 
     @Test
-    void executesRightAtNorthWarpToSouth() {
+    void executesBackwardAtNorthWarpToBottom() {
         Planet planet = new Planet(5, 5);
-        Rover rover = new Rover(planet, new Position(0, 5), Direction.W);
+        Rover rover = new Rover(planet, new Position(2, 5), Direction.S);
 
-        rover.execute("r");
+        rover.execute("b");
 
-        assertEquals(5, rover.getPosition().getX());
+        assertEquals(2, rover.getPosition().getX());
         assertEquals(0, rover.getPosition().getY());
-        assertEquals(Direction.W, rover.getDirection());
+        assertEquals(Direction.S, rover.getDirection());
     }
-
 
 }
