@@ -179,7 +179,7 @@ class RoverTest {
     }
 
     @Test
-    void executesForwardAtEastWarpToSouth() {
+    void executesForwardAtEastWarpToWest() {
         Planet planet = new Planet(5, 5);
         Rover rover = new Rover(planet, new Position(5, 0), Direction.E);
 
@@ -188,6 +188,18 @@ class RoverTest {
         assertEquals(0, rover.getPosition().getX());
         assertEquals(0, rover.getPosition().getY());
         assertEquals(Direction.E, rover.getDirection());
+    }
+
+    @Test
+    void executesForwardAtWestWarpToEast() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(0, 0), Direction.W);
+
+        rover.execute("f");
+
+        assertEquals(5, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(Direction.W, rover.getDirection());
     }
 
 
