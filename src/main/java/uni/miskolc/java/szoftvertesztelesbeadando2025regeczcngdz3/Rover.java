@@ -41,6 +41,10 @@ public class Rover {
                     }
                     position = new Position(position.getX() + 1, position.getY());
                 } else if (direction == Direction.W) {
+                    if (position.getX() <= 0) {
+                        position = new Position(planet.getWidth(), position.getY());
+                        continue;
+                    }
                     position = new Position(position.getX() - 1, position.getY());
                 }
             }
