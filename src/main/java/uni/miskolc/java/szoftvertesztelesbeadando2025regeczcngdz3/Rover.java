@@ -53,6 +53,10 @@ public class Rover {
                 if (direction == Direction.N) {
                     position = new Position(position.getX(), position.getY() - 1);
                 } else if (direction == Direction.S) {
+                    if (position.getY() >= planet.getHeight()) {
+                        position = new Position(position.getX(), 0);
+                        continue;
+                    }
                     position = new Position(position.getX(), position.getY() + 1);
                 }  else if (direction == Direction.E) {
                     position = new Position(position.getX() - 1, position.getY());
