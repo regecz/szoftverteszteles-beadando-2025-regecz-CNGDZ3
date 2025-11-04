@@ -29,6 +29,10 @@ public class Rover {
                     }
                     position = new Position(position.getX(), position.getY() + 1);
                 } else if (direction == Direction.S) {
+                    if (position.getY() <= 0) {
+                        position = new Position(position.getX(), planet.getHeight());
+                        continue;
+                    }
                     position = new Position(position.getX(), position.getY() - 1);
                 } else if (direction == Direction.E) {
                     position = new Position(position.getX() + 1, position.getY());
