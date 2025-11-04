@@ -226,4 +226,16 @@ class RoverTest {
         assertEquals(Direction.N, rover.getDirection());
     }
 
+    @Test
+    void executesBackwardAtEastWarpToWest() {
+        Planet planet = new Planet(5, 5);
+        Rover rover = new Rover(planet, new Position(5, 0), Direction.W);
+
+        rover.execute("b");
+
+        assertEquals(0, rover.getPosition().getX());
+        assertEquals(0, rover.getPosition().getY());
+        assertEquals(Direction.W, rover.getDirection());
+    }
+
 }
